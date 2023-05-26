@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <div>第一次使用git</div>
+  <h1>这是一级标题</h1>
+  <script src="./index.js"></script>
+  <!-- Git安装:下载系统对应版本的git,安装完成后进行全局配置 git config --globle user.name "aaa"
+  git config --globle user.email "aaa@qq.com",完成后可以在系统盘的用户文件夹里找到git.config文件,里面记录者全局配置内容
+    -->
+  <!-- 项目 git初始化:在项目文件根目录鼠标右键 选择git bash 开启终端,输入git init 回车,根目录中会自动创建一个.git文件夹(前提是需要打开文件的扩展名显示和隐藏文件的显示),如果需要其他的git指令可以git全局配置的终端窗口输入 git help config 会自动打开浏览器显示其他的git 指令,或者在终端窗口中输入 git config -h 也行;
+   -->
+  <!-- 工作区中文件的4种状态:
+    1:未跟踪: 不被git 管理
+    2:未修改: 工作区中文件的内容和git仓库中文件的内容保持一致
+    3:已经修改: 工作区中文件内容和仓库中文件内容不一致
+    4:已经暂存: 工作区中被修改的文件已被放到暂存区,准备将修改后的文件保存到git仓库
+
+    检查文件的状态使用 git status 
+    5: 如何以精简的方式显示文件的状态 git status -s
+    6: 跟踪新文件方法 git add 完整文件名
+    7: 提交更新 git commit -m "新建了index.html文件"
+       提交成功后,再次使用 git status查看文件的状态
+    8、对已提交的文件进行修改后: 使用 git status 进行查看会显示
+     modified:   index.html, 使用 git status -s 进行查看会显示
+     M index.html, 如果要把被修改后的文件放入暂存区需要用到 git add 命令,
+     git add 是多功能命令: a、追踪新文件 b、把已经追踪的且被修改的文件放到暂存区 c、把有冲突的文件标记为已经解决状态
+     9、提交已暂存的文件: git commit -m "提交信息", 
+     最后 git status 查看文件状态 显示：
+      nothing to commit, working tree clean
+    10、撤销修改:把对工作区中对应文件的修改,还原成git 仓库中保存的版本,
+        撤销修改后所有的修改内容全部撤销，且无法恢复,危险性较高,工作中需要留心
+        撤销命令是 git checkout -- 要撤销的完整文件名
+    11、向暂存区一次性添加多个(新增和修改过的)文件:  添加命令是
+        git add . 
+    12、取消暂存的文件: 使用命令 git reset HEAD 要取消暂存的文件名 (取消暂存某个文件)
+        git reset HEAD . (取消所有的暂存文件)
+    13、跳过使用暂存区: Git 正常使用流程 工作区 -> 暂存区 -> Git仓库;
+        但是为方便也可以跳过暂存区,直接将工作区中修改的文件提交到Git仓库;
+        跳过暂存区的命令是: git commit -a -m "描述信息" (可以提交一个也可以一次提交多个)
+    14、从Git仓库移除文件的方式有两种：
+        方法1: 把指定文件从Git仓库和工作区中同时移除, 移除命令是
+         git rm -f 完整文件名
+        方法2: 只把指定的文件从Git仓库中移除但是工作区中保留,移除命令是
+         git rm --cached 完整文件名 
+    15、忽略文件: 一些不需要提交到Git 管理也不希望经常出现在未被跟踪的文件列表中,因此可以创建一个名为.gitignore的配置文件,列出需要被忽略的文件匹配模式:
+    a、以# 开头的是注释
+    b、以/ 结尾的是目录
+    c、以/ 开头防止递归
+    d、以! 开头表示取反
+    e、可以用glob 模式进行文件和文件夹的匹配(glob 是简化了的正则表达式)
+       glob(简化正则) : 
+       星号* 匹配零个或多个任意字符
+       [abc] 匹配任何一个列在方括号中的字符
+       问号? 只匹配一个任意字符...... 
+      忽略文件创建以后,需要把忽略文件提交到Git 仓库中
+    16: 查看提交历史,可以查看项目中的所有提交记录, git log 实现查看提交历史
+      git log (按照时间的先后列出所有的提交历史,最近提交的在最上面)
+      git log -2 (只显示两条最新提交的历史,数字可以按照需求填写)
+      git log -2 --pretty=oneline (在一行显示最近的两条提交历史)
+      %h 提交的简写哈希值 %an作者名字 %ar作者修订日期,按多久以前的方式显示 %s提交说明
+      git log -2 --pretty=format:"%h | %an | %ar | %s"
+    17: 回退到指定的版本 先打印出所有的提交历史 git log --pretty=oneline,
+        使用git reset --hard 命令,根据指定的提交 ID 回退到指定的版本
+        git reset --hard <commitID>,在旧的版本中使用 git reflog --pretty=oneline 
+        命令,查看命令操作的历史
+        再次根据最新的提交 ID,跳到最新的版本
+    18: 创建远程GitHub仓库以后,有两种访问远程仓库的方式
+        1、HTTPS: 零配置,每次访问仓库需要重复输入Github的账号和密码才能成功访问
+        2、SSH: 需要另外进行配置;配置完成后,每次访问仓库,不需要重复输入Github 的账号和密码
+        
+   -->
+</body>
+
+</html>
